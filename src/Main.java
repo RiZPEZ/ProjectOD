@@ -1,6 +1,8 @@
 import java.io.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.io.IOException;
+
 
 public class Main {
 
@@ -9,14 +11,16 @@ public class Main {
 
     private static    Swim swim = new Swim("Swim");
     private static    Soccer soccer = new Soccer("Soccer");
-    private static    Basketball basketball = new Basketball("String");
+    private static    Basketball basketball = new Basketball("Basketball");
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         allClub.add(swim);
         allClub.add(soccer);
         allClub.add(basketball);
+
+        loadUser();
 
 
 
@@ -33,6 +37,8 @@ public class Main {
         String memberName = keyboard.nextLine();
 
         allClub.get(select).addMember(memberName);
+
+        writeUser();
 
         System.out.println("Suc");
 
@@ -77,10 +83,9 @@ public class Main {
     }
 
 
-    public static List<Club> loadUser()
-    {
+    public static void loadUser() throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/UserAll/user.txt"))))
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/memberClub.txt"))))
         {
             String[] fields = null;
             String line = null;
@@ -88,78 +93,61 @@ public class Main {
             for (int i = 0 ; ((line = reader.readLine()) != null); i++) {
                 fields = line.split(",");
 
-//
-//                user.setName(fields[0]);
-//                user.setPassword(fields[1]);
-//                user.setMoney(Integer.parseInt(fields[2]));
+                if (Objects.equals(fields[0], allClub.get(i).getName()))
+                {
+                    for (int j = 1; j < fields.length; j++)
+                    {
+                        allClub.get(i).addMember(fields[j]);
 
-//                if (fields.length-1 > 2)
-//                {
-//                    for (int j = 3; j < fields.length; j++)
-//                    {
-//                        Game game = new Game(String.valueOf(fields[j]));
-//
-//                        user.addGames(game);
-//
-//                    }
-
+                    }
+                }
 
                 }
 
-
-                userList.addLast(user);
-
             }
 
-        }
+
         catch (IOException e)
         {
             System.out.println("Error: " + e.getMessage());
         }
-
-
-        return userList;
 
     }
 
 
 
 
-//    public static void writeUser()
-//    {
-//
-//        try(BufferedWriter bW = new BufferedWriter(new FileWriter(new File("src/UserAll/user.txt"))))
-//
-//        {
-//            for (User loopUser: loadUsers)
-//            {
-//                bW.write(loopUser.getName());
-//                bW.write(',');
-//                bW.write(loopUser.getPassword());
-//                bW.write(',');
-//                bW.write(String.valueOf(loopUser.getMoney()));
-//
-//                if (loopUser.getGames().isEmpty() == false)
-//                {
-//
-//                    for (int j = 0; j < loopUser.getGames().size() ; j++)
-//                    {
-//                        bW.write(',');
-//                        bW.write(loopUser.getGames().get(j).getName());
-//
-//                    }
-//                }
-//
-//                bW.newLine();
-//            }
-//
-//        }
-//        catch (IOException e)
-//        {
-//            System.out.println("Error" + e.getMessage());
-//        }
-//
-//    }
+    public static void writeUser()
+    {
+
+        try(BufferedWriter bW = new BufferedWriter(new FileWriter(new File("src/memberClub.txt"))))
+
+        {
+            for (Club club: allClub)
+            {
+                bW.write(club.getName());
+
+                if (club.getMember().isEmpty() == false)
+                {
+
+                    for (int j = 0; j < club.getMember().size() ; j++)
+                    {
+                        bW.write(',');
+                        bW.write(club.getMemberName(j));
+
+                    }
+                }
+
+                bW.newLine();
+            }
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error" + e.getMessage());
+        }
+
+    }
 
 
 //

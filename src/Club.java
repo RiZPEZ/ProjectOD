@@ -23,10 +23,16 @@ public class Club {
         return member;
     }
 
+    public String getMemberName(int i) {
+        return member.get(i);
+    }
+
     public void addMember(String member)
     {
         this.member.add(member);
     }
+
+
 
 
     public void start()
