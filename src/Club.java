@@ -7,7 +7,7 @@ public class Club {
 
     private String name = "";
 
-    private Deque<String> member = new ArrayDeque<>();
+    private List<String> member = new ArrayList<>();
 
     public Club(String name)
     {
@@ -19,7 +19,7 @@ public class Club {
         return name;
     }
 
-    public Deque<String> getMember() {
+    public List<String> getMember() {
         return member;
     }
 

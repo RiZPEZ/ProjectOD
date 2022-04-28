@@ -1,27 +1,42 @@
 import java.io.*;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    static Scanner keyboard = new Scanner(System.in);
-    static Deque<Club> allClub = new ArrayDeque<>();
+    private static Scanner keyboard = new Scanner(System.in);
+    private static List<Club> allClub = new ArrayList<>();
 
-        Swim swim = new Swim("Swim");
-        Soccer soccer = new Soccer("Soccer");
-        Basketball basketball = new Basketball("String");
+    private static    Swim swim = new Swim("Swim");
+    private static    Soccer soccer = new Soccer("Soccer");
+    private static    Basketball basketball = new Basketball("String");
+
+
+    public static void main(String[] args) {
 
         allClub.add(swim);
         allClub.add(soccer);
         allClub.add(basketball);
-    public static void main(String[] args) {
 
 
 
-        selection("Selection club : ", "Error", 1, allClub.size());
+        for (int i = 0; i < allClub.size() ; i++)
+        {
+            System.out.println( (i+1) + "." + allClub.get(i).getName() );
+        }
 
+        int select = selection("Selection club : ", "Error", 0, allClub.size());
+
+        System.out.println("join " + allClub.get(select).getName() + " club");
+
+        System.out.print("Enter Your Name : ");
+        String memberName = keyboard.nextLine();
+
+        allClub.get(select).addMember(memberName);
+
+        System.out.println("Suc");
+
+//        System.out.println(allClub.get(select).getMember());
 
     }
 
@@ -40,6 +55,8 @@ public class Main {
 
                 System.out.print(inPutMessage);
                 selection = Integer.parseInt(keyboard.nextLine());
+
+                selection = selection-1;
 
                 if (selection < low || selection > hight)
                     throw new NumberFormatException();
@@ -60,73 +77,91 @@ public class Main {
     }
 
 
+    public static List<Club> loadUser()
+    {
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/UserAll/user.txt"))))
+        {
+            String[] fields = null;
+            String line = null;
 
+            for (int i = 0 ; ((line = reader.readLine()) != null); i++) {
+                fields = line.split(",");
 
-
-//    public Deque<String> loadBook() {
 //
-//        Deque<String> loadBook = new ArrayDeque<>();
+//                user.setName(fields[0]);
+//                user.setPassword(fields[1]);
+//                user.setMoney(Integer.parseInt(fields[2]));
+
+//                if (fields.length-1 > 2)
+//                {
+//                    for (int j = 3; j < fields.length; j++)
+//                    {
+//                        Game game = new Game(String.valueOf(fields[j]));
 //
-//        File myFile = new File("src/member.txt");
+//                        user.addGames(game);
 //
-//        try (BufferedReader reader = new BufferedReader(new FileReader(myFile)))
+//                    }
+
+
+                }
+
+
+                userList.addLast(user);
+
+            }
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+        return userList;
+
+    }
+
+
+
+
+//    public static void writeUser()
+//    {
+//
+//        try(BufferedWriter bW = new BufferedWriter(new FileWriter(new File("src/UserAll/user.txt"))))
+//
 //        {
-//            String[] fields = null;
-//            String line = null;
+//            for (User loopUser: loadUsers)
+//            {
+//                bW.write(loopUser.getName());
+//                bW.write(',');
+//                bW.write(loopUser.getPassword());
+//                bW.write(',');
+//                bW.write(String.valueOf(loopUser.getMoney()));
 //
-//            for (int i = 0 ; ((line = reader.readLine()) != null); i++) {
-//                fields = line.split(",");
+//                if (loopUser.getGames().isEmpty() == false)
+//                {
 //
-////                Book book = new Book(String.valueOf(fields[0]),String.valueOf(fields[1]),Double.parseDouble(fields[2])
-////                        ,Double.parseDouble(fields[3]),Integer.parseInt(fields[4]),Integer.parseInt(fields[5]));
+//                    for (int j = 0; j < loopUser.getGames().size() ; j++)
+//                    {
+//                        bW.write(',');
+//                        bW.write(loopUser.getGames().get(j).getName());
 //
-//                String mebmer = "";
+//                    }
+//                }
 //
-//                if (fields[0] == )
-//
-//                book.setCode(String.valueOf(fields[0]));
-//
-////                System.out.print("\t\t\tKey Name Book =");
-////                Name[top] = String.valueOf(new Scanner(System.in).nextLine());
-//                book.setName(String.valueOf(fields[1]));
-//
-////                System.out.print("\t\t\tKey Price =");
-////                Price[top] = Double.parseDouble(new Scanner(System.in).nextLine());
-//                book.setPrice(Double.parseDouble(fields[2]));
-//
-////                System.out.print("\t\t\tKey Rent for day =");
-////                Rent_day[top] = Double.parseDouble(new Scanner(System.in).nextLine());
-//                book.setRent_day(Double.parseDouble(fields[3]));
-//
-////                System.out.println("\t\t\t.......................");
-//
-//
-////                Status[top] = 0;
-//                book.setStatus(Integer.parseInt((fields[4])));
-//
-////                Date[top] = 0;
-//                book.setDate(Integer.parseInt((fields[5])));
-//
-//
-//                loadBook.add(book);
-////                loadGames.set(i, game);
-//
+//                bW.newLine();
 //            }
 //
 //        }
-//
 //        catch (IOException e)
 //        {
-//            System.out.println("Error: " + e.getMessage());
+//            System.out.println("Error" + e.getMessage());
 //        }
 //
-//
-//
-//        return loadBook;
-//
-//
 //    }
+
+
 //
 //
 ////    public Deque<Book> listBook = loadBook();
