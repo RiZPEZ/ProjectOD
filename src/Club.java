@@ -9,15 +9,15 @@ public class Club {
 
     private List<String> member = new ArrayList<>();
 
+    public String getName() {
+        return name;
+    }
+
     public Club(String name)
     {
         this.name = name;
     }
 
-
-    public String getName() {
-        return name;
-    }
 
     public List<String> getMember() {
         return member;
@@ -32,16 +32,9 @@ public class Club {
         this.member.add(member);
     }
 
-
-
-
     public void start()
     {
         System.out.println("Start Club" + getName());
     }
-
-
-
-    
 
 }
