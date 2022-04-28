@@ -33,16 +33,45 @@ public class Main {
 
         System.out.println("join " + allClub.get(select).getName() + " club");
 
-        System.out.print("Enter Your Name : ");
-        String memberName = keyboard.nextLine();
 
-        allClub.get(select).addMember(memberName);
+        boolean found = false;
 
-        writeUser();
+        do
+        {
 
-        System.out.println("Suc");
+            System.out.print("Enter Your Name : ");
+            String newMember = keyboard.nextLine();
 
-//        System.out.println(allClub.get(select).getMember());
+            for (String member : allClub.get(select).getMember()) {
+
+                if (Objects.equals(newMember, member)) {
+                    found = true;
+                    break;
+                }
+
+                else
+                {
+                    found = false;
+                }
+
+            }
+
+            if (found == true) {
+                System.out.println("Du");
+            }
+
+            else
+            {
+                System.out.println("Suc");
+                allClub.get(select).addMember(newMember);
+                writeUser();
+                break;
+
+            }
+
+        } while (found == true);
+
+
 
     }
 
